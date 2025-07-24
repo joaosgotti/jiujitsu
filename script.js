@@ -2,7 +2,7 @@
 // 1. DADOS DE ENTRADA
 // ==============================================================================
 const DATAS_CONHECIDAS_STR = [
-    "31/07/2020", "05/10/2020", "10/12/2020", "14/02/2021", "21/04/2021",
+    "31/07/2020", "17/12/2020", "05/05/2021", "21/09/2021", "07/02/2022",
     "27/06/2022", "27/07/2023", "27/12/2023", "09/10/2024", "15/01/2025",
     "31/01/2025", "23/07/2025"
 ];
@@ -30,6 +30,20 @@ function linearRegression(x, y) {
     return { slope };
 }
 
+function linearRegressionWeighted(x, y, weights) {
+    let sum_w = 0, sum_wx = 0, sum_wy = 0, sum_wxx = 0, sum_wxy = 0;
+    for (let i = 0; i < x.length; i++) {
+        const w = weights[i];
+        sum_w += w;
+        sum_wx += w * x[i];
+        sum_wy += w * y[i];
+        sum_wxx += w * x[i] * x[i];
+        sum_wxy += w * x[i] * y[i];
+    }
+    const slope = (sum_w * sum_wxy - sum_wx * sum_wy) / (sum_w * sum_wxx - sum_wx * sum_wx);
+    return { slope };
+}
+
 // ==============================================================================
 // 3. PROCESSAMENTO DOS DADOS
 // ==============================================================================
@@ -41,7 +55,8 @@ const nRecentes = 5;
 const xRecentes = xConhecidos.slice(-nRecentes);
 const yRecentes = yConhecidos.slice(-nRecentes);
 
-const { slope } = linearRegression(xRecentes, yRecentes);
+const weights = xRecentes.map((_, i) => i + 1);
+const { slope } = linearRegressionWeighted(xRecentes, yRecentes, weights);
 const ultimoXConhecido = xConhecidos[xConhecidos.length - 1];
 const ultimoYConhecido = yConhecidos[yConhecidos.length - 1];
 
@@ -63,6 +78,11 @@ for (let i = 0; i < indicesPrincipais.length - 1; i++) {
     const meses = Math.floor((diff % 365) / 30);
     infoBoxHTML += `${faixasPrincipais[i]} → ${faixasPrincipais[i+1]}: ~${anos}a ${meses}m<br>`;
 }
+// Adiciona o tempo total ao final do infoBox
+const diffTotal = yTodos[indicesPrincipais[indicesPrincipais.length - 1]] - yTodos[indicesPrincipais[0]];
+const anosTotal = Math.floor(diffTotal / 365);
+const mesesTotal = Math.floor((diffTotal % 365) / 30);
+infoBoxHTML += `<br><strong>Tempo total estimado: ${anosTotal} anos e ${mesesTotal} meses</strong>`;
 document.getElementById('infoBox').innerHTML = infoBoxHTML;
 
 

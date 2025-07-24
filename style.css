@@ -15,11 +15,17 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-}
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 0px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #878d94;
+        margin-bottom: 10px;
+    }
 
 .chart-container {
     position: relative;
@@ -28,17 +34,16 @@ h1 {
 }
 
 .info-box {
-    position: absolute;
-    top: 20px;
-    left: 80px;
-    background-color: rgba(255, 255, 255, 0.85);
-    padding: 10px;
-    border-radius: 5px;
+    background: #fff;
     border: 1px solid #ddd;
-    font-size: 0.9em;
-    line-height: 1.5;
-    pointer-events: none; /* Permite clicar "através" da caixa */
-    z-index: 10;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 32px auto 0 auto;
+    max-width: 350px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    font-size: 1.1em;
+    /* Remova qualquer position: absolute ou fixed! */
+    position: static;
 }
 
 footer {
