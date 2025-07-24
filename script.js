@@ -131,3 +131,53 @@ const jiujitsuChart = new Chart(ctx, {
         }
     }
 });
+
+// Array de imagens para os pontos (apenas ponto 11 com imagem de teste)
+const IMAGENS_PONTOS = [
+  "img/b0.jpeg", // ponto 0
+  "img/b1.jpeg", // ponto 1
+  "img/b2.jpeg", // ponto 2
+  "img/b3.jpeg", // ponto 3
+  "img/b4.jpeg", // ponto 4
+  "img/a0.jpeg", // ponto 5
+  "img/a1.jpeg", // ponto 6
+  "img/a2.jpeg", // ponto 7
+  "img/a3.jpeg", // ponto 8
+  "img/a4.jpeg", // ponto 9
+  "img/r0.jpeg", // ponto 10
+  "img/r1.jpeg", // ponto 11
+  "img/r2.jpeg", // ponto 12
+  "img/r3.jpeg", // ponto 13
+  "img/r4.jpeg", // ponto 14
+  "img/m0.jpeg", // ponto 15
+  "img/m1.jpeg", // ponto 16
+  "img/m2.jpeg", // ponto 17
+  "img/m3.jpeg", // ponto 18
+  "img/m4.jpeg", // ponto 19
+  "img/p0.jpeg"  // ponto 20
+];
+
+// Código para mostrar a imagem ao passar o mouse sobre o ponto
+const tooltipImg = document.getElementById('tooltipImg');
+const canvas = document.getElementById('jiujitsuChart');
+
+canvas.addEventListener('mousemove', function(event) {
+    const points = jiujitsuChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+    if (points.length) {
+        const idx = points[0].index;
+        if (IMAGENS_PONTOS[idx]) {
+            tooltipImg.src = IMAGENS_PONTOS[idx];
+            tooltipImg.style.display = 'block';
+            tooltipImg.style.left = (event.pageX + 20) + 'px';
+            tooltipImg.style.top = (event.pageY - 40) + 'px';
+        } else {
+            tooltipImg.style.display = 'none';
+        }
+    } else {
+        tooltipImg.style.display = 'none';
+    }
+});
+
+canvas.addEventListener('mouseleave', function() {
+    tooltipImg.style.display = 'none';
+});

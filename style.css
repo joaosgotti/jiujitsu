@@ -52,3 +52,14 @@ footer {
     font-size: 0.9em;
     color: #777;
 }
+
+#tooltipImg {
+    width: 140px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: none;
+    position: absolute;
+    z-index: 200;
+}
