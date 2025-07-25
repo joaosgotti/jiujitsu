@@ -71,18 +71,33 @@ const datasTodas = yTodos.map(days => formatDate(new Date(dataBase.getTime() + d
 // Preenche o box de informações
 const indicesPrincipais = [0, 5, 10, 15, 20];
 const faixasPrincipais = ["Branca", "Azul", "Roxa", "Marrom", "Preta"];
-let infoBoxHTML = "<strong>Tempo estimado por faixa:</strong><br>";
-for (let i = 0; i < indicesPrincipais.length - 1; i++) {
+
+let infoBoxHTML = `<strong class="titulo-info">Tempo de faixa:</strong><br>`;
+for (let i = 0; i < indicesPrincipais.length - 3; i++) {
     const diff = yTodos[indicesPrincipais[i + 1]] - yTodos[indicesPrincipais[i]];
     const anos = Math.floor(diff / 365);
     const meses = Math.floor((diff % 365) / 30);
-    infoBoxHTML += `${faixasPrincipais[i]} → ${faixasPrincipais[i+1]}: ~${anos}a ${meses}m<br>`;
+    infoBoxHTML += `${faixasPrincipais[i]} → ${faixasPrincipais[i+1]}: ${anos}a ${meses}m<br>`;
 }
-// Adiciona o tempo total ao final do infoBox
+// Tempo entre agora e marrom
+
+const idxAgora = yConhecidos.length - 1;
+const idxMarrom = indicesPrincipais[3];
+const diffAgoraMarrom = yTodos[idxMarrom] - yTodos[idxAgora];
+const anosAgoraMarrom = Math.floor(diffAgoraMarrom / 365);
+const mesesAgoraMarrom = Math.floor((diffAgoraMarrom % 365) / 30);
+
+const idxPreta = indicesPrincipais[4];
+const diffAgoraPreta = yTodos[idxPreta] - yTodos[idxAgora];
+const anosAgoraPreta = Math.floor(diffAgoraPreta / 365);
+const mesesAgoraPreta = Math.floor((diffAgoraPreta % 365) / 30);
+
+infoBoxHTML += `<br><strong class="titulo-info"> Tempo estimado para próximas faixas:</strong></br>
+Para marrom: ${anosAgoraMarrom}a ${mesesAgoraMarrom}m<br>Para preta: ${anosAgoraPreta}a ${mesesAgoraPreta}m</br>`;
 const diffTotal = yTodos[indicesPrincipais[indicesPrincipais.length - 1]] - yTodos[indicesPrincipais[0]];
 const anosTotal = Math.floor(diffTotal / 365);
 const mesesTotal = Math.floor((diffTotal % 365) / 30);
-infoBoxHTML += `<br><strong>Tempo total estimado: ${anosTotal} anos e ${mesesTotal} meses</strong>`;
+infoBoxHTML += `<br><strong class="titulo-info">Tempo total estimado: ${anosTotal} anos e ${mesesTotal} meses</strong>`;
 document.getElementById('infoBox').innerHTML = infoBoxHTML;
 
 
@@ -104,7 +119,7 @@ const jiujitsuChart = new Chart(ctx, {
                     return context.dataIndex >= yConhecidos.length ? color + '80' : color;
                 },
                 pointBorderColor: (context) => context.dataIndex >= yConhecidos.length ? '#777' : '#333',
-                pointRadius: (context) => context.dataIndex < yConhecidos.length ? 6 : 5,
+                pointRadius: (context) => context.dataIndex < yConhecidos.length ? 10 : 5,
                 pointHoverRadius: (context) => context.dataIndex < yConhecidos.length ? 8 : 7,
                 pointStyle: (context) => context.dataIndex < yConhecidos.length ? 'circle' : 'rectRot',
             }
@@ -165,11 +180,11 @@ canvas.addEventListener('mousemove', function(event) {
     const points = jiujitsuChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
     if (points.length) {
         const idx = points[0].index;
-        if (IMAGENS_PONTOS[idx]) {
+        if (IMAGENS_PONTOS[idx] && IMAGENS_PONTOS[idx].trim() !== "") {
             tooltipImg.src = IMAGENS_PONTOS[idx];
             tooltipImg.style.display = 'block';
-            tooltipImg.style.left = (event.pageX + 20) + 'px';
-            tooltipImg.style.top = (event.pageY - 40) + 'px';
+            tooltipImg.style.left = (event.pageX + 30) + 'px';
+            tooltipImg.style.top = (event.pageY + 30) + 'px';
         } else {
             tooltipImg.style.display = 'none';
         }
@@ -181,3 +196,7 @@ canvas.addEventListener('mousemove', function(event) {
 canvas.addEventListener('mouseleave', function() {
     tooltipImg.style.display = 'none';
 });
+
+tooltipImg.onerror = function() {
+    tooltipImg.style.display = 'none';
+};
