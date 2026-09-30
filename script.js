@@ -1,183 +1,128 @@
-// ==============================================================================
-// 1. DADOS DE ENTRADA
-// ==============================================================================
-const DATAS_CONHECIDAS_STR = [
-    "31/07/2020", "17/12/2020", "05/05/2021", "21/09/2021", "07/02/2022",
-    "27/06/2022", "27/07/2023", "27/12/2023", "09/10/2024", "15/01/2025",
-    "31/01/2025", "23/07/2025"
+// Marcos confirmados: atualize somente estas duas listas quando houver uma nova graduação.
+const DATAS_CONHECIDAS = [
+  "31/07/2020", "17/12/2020", "05/05/2021", "21/09/2021", "07/02/2022",
+  "27/06/2022", "27/07/2023", "27/12/2023", "09/10/2024", "15/01/2025",
+  "31/01/2025", "23/07/2025"
 ];
-const LABELS_FAIXAS = [
-    "faixa branca", "branca 1º grau", "branca 2º grau", "branca 3º grau", "branca 4º grau",
-    "faixa azul", "azul 1º grau", "azul 2º grau", "azul 3º grau", "azul 4º grau",
-    "faixa roxa", "roxa 1º grau", "roxa 2º grau", "roxa 3º grau", "roxa 4º grau",
-    "faixa marrom", "marrom 1º grau", "marrom 2º grau", "marrom 3º grau", "marrom 4º grau",
-    "faixa preta"
+
+const GRADUACOES = [
+  "Faixa branca", "Branca · 1º grau", "Branca · 2º grau", "Branca · 3º grau", "Branca · 4º grau",
+  "Faixa azul", "Azul · 1º grau", "Azul · 2º grau", "Azul · 3º grau", "Azul · 4º grau",
+  "Faixa roxa", "Roxa · 1º grau", "Roxa · 2º grau", "Roxa · 3º grau", "Roxa · 4º grau",
+  "Faixa marrom", "Marrom · 1º grau", "Marrom · 2º grau", "Marrom · 3º grau", "Marrom · 4º grau",
+  "Faixa preta"
 ];
+
 const CORES_FAIXA = [
-    ...Array(5).fill('#AAAAAA'), ...Array(5).fill('#3498DB'),
-    ...Array(5).fill('#8E44AD'), ...Array(5).fill('#A0522D'), '#000000'
+  ...Array(5).fill("#e8edf5"), ...Array(5).fill("#48a9ff"),
+  ...Array(5).fill("#b172e7"), ...Array(5).fill("#bd7a52"), "#d6dce7"
 ];
 
-// ==============================================================================
-// 2. FUNÇÕES AUXILIARES
-// ==============================================================================
-function parseDate(str) { const [d, m, y] = str.split('/'); return new Date(y, m - 1, d); }
-function formatDate(date) { const d = String(date.getDate()).padStart(2, '0'); const m = String(date.getMonth() + 1).padStart(2, '0'); return `${d}/${m}/${date.getFullYear()}`; }
-function linearRegression(x, y) {
-    const n = x.length; let sum_x = 0, sum_y = 0, sum_xy = 0, sum_xx = 0;
-    for (let i = 0; i < n; i++) { sum_x += x[i]; sum_y += y[i]; sum_xy += x[i] * y[i]; sum_xx += x[i] * x[i]; }
-    const slope = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
-    return { slope };
-}
-
-function linearRegressionWeighted(x, y, weights) {
-    let sum_w = 0, sum_wx = 0, sum_wy = 0, sum_wxx = 0, sum_wxy = 0;
-    for (let i = 0; i < x.length; i++) {
-        const w = weights[i];
-        sum_w += w;
-        sum_wx += w * x[i];
-        sum_wy += w * y[i];
-        sum_wxx += w * x[i] * x[i];
-        sum_wxy += w * x[i] * y[i];
-    }
-    const slope = (sum_w * sum_wxy - sum_wx * sum_wy) / (sum_w * sum_wxx - sum_wx * sum_wx);
-    return { slope };
-}
-
-// ==============================================================================
-// 3. PROCESSAMENTO DOS DADOS
-// ==============================================================================
-const dataBase = parseDate(DATAS_CONHECIDAS_STR[0]);
-const yConhecidos = DATAS_CONHECIDAS_STR.map(d => Math.ceil(Math.abs(parseDate(d) - dataBase) / (1000 * 60 * 60 * 24)));
-const xConhecidos = Array.from({ length: yConhecidos.length }, (_, i) => i);
-
-const nRecentes = 5;
-const xRecentes = xConhecidos.slice(-nRecentes);
-const yRecentes = yConhecidos.slice(-nRecentes);
-
-const weights = xRecentes.map((_, i) => i + 1);
-const { slope } = linearRegressionWeighted(xRecentes, yRecentes, weights);
-const ultimoXConhecido = xConhecidos[xConhecidos.length - 1];
-const ultimoYConhecido = yConhecidos[yConhecidos.length - 1];
-
-const yTodos = [...yConhecidos];
-for (let i = yConhecidos.length; i < LABELS_FAIXAS.length; i++) {
-    const yPrevisto = ultimoYConhecido + slope * (i - ultimoXConhecido);
-    yTodos.push(Math.round(yPrevisto));
-}
-
-const datasTodas = yTodos.map(days => formatDate(new Date(dataBase.getTime() + days * 24 * 60 * 60 * 1000)));
-
-// Preenche o box de informações
-const indicesPrincipais = [0, 5, 10, 15, 20];
-const faixasPrincipais = ["Branca", "Azul", "Roxa", "Marrom", "Preta"];
-let infoBoxHTML = "<strong>Tempo estimado por faixa:</strong><br>";
-for (let i = 0; i < indicesPrincipais.length - 1; i++) {
-    const diff = yTodos[indicesPrincipais[i + 1]] - yTodos[indicesPrincipais[i]];
-    const anos = Math.floor(diff / 365);
-    const meses = Math.floor((diff % 365) / 30);
-    infoBoxHTML += `${faixasPrincipais[i]} → ${faixasPrincipais[i+1]}: ~${anos}a ${meses}m<br>`;
-}
-// Adiciona o tempo total ao final do infoBox
-const diffTotal = yTodos[indicesPrincipais[indicesPrincipais.length - 1]] - yTodos[indicesPrincipais[0]];
-const anosTotal = Math.floor(diffTotal / 365);
-const mesesTotal = Math.floor((diffTotal % 365) / 30);
-infoBoxHTML += `<br><strong>Tempo total estimado: ${anosTotal} anos e ${mesesTotal} meses</strong>`;
-document.getElementById('infoBox').innerHTML = infoBoxHTML;
-
-
-// ==============================================================================
-// 4. CRIAÇÃO DO GRÁFICO (AGORA COM UM ÚNICO DATASET)
-// ==============================================================================
-const ctx = document.getElementById('jiujitsuChart').getContext('2d');
-const jiujitsuChart = new Chart(ctx, {
-    type: 'line', data: { labels: LABELS_FAIXAS,
-        datasets: [
-            // O único dataset que precisamos: a jornada completa.
-            {
-                label: 'Jornada', // Este label não será mais mostrado
-                data: yTodos,
-                borderColor: 'rgba(128, 128, 128, 0.4)',
-                tension: 0.1,
-                pointBackgroundColor: (context) => {
-                    const color = CORES_FAIXA[context.dataIndex];
-                    return context.dataIndex >= yConhecidos.length ? color + '80' : color;
-                },
-                pointBorderColor: (context) => context.dataIndex >= yConhecidos.length ? '#777' : '#333',
-                pointRadius: (context) => context.dataIndex < yConhecidos.length ? 6 : 5,
-                pointHoverRadius: (context) => context.dataIndex < yConhecidos.length ? 8 : 7,
-                pointStyle: (context) => context.dataIndex < yConhecidos.length ? 'circle' : 'rectRot',
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false // Esconde completamente a legenda para um visual mais limpo
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return `Data: ${datasTodas[context.dataIndex]}`;
-                    }
-                }
-            }
-        },
-        scales: {
-            x: { title: { display: true, text: 'Graduações' } },
-            y: { title: { display: true, text: `Dias desde ${formatDate(dataBase)}` }, beginAtZero: true }
-        }
-    }
-});
-
-// Array de imagens para os pontos (apenas ponto 11 com imagem de teste)
+// Se quiser fotos nos tooltips, coloque-as em img/ e mantenha os nomes abaixo.
 const IMAGENS_PONTOS = [
-  "img/b0.jpeg", // ponto 0
-  "img/b1.jpeg", // ponto 1
-  "img/b2.jpeg", // ponto 2
-  "img/b3.jpeg", // ponto 3
-  "img/b4.jpeg", // ponto 4
-  "img/a0.jpeg", // ponto 5
-  "img/a1.jpeg", // ponto 6
-  "img/a2.jpeg", // ponto 7
-  "img/a3.jpeg", // ponto 8
-  "img/a4.jpeg", // ponto 9
-  "img/r0.jpeg", // ponto 10
-  "img/r1.jpeg", // ponto 11
-  "img/r2.jpeg", // ponto 12
-  "img/r3.jpeg", // ponto 13
-  "img/r4.jpeg", // ponto 14
-  "img/m0.jpeg", // ponto 15
-  "img/m1.jpeg", // ponto 16
-  "img/m2.jpeg", // ponto 17
-  "img/m3.jpeg", // ponto 18
-  "img/m4.jpeg", // ponto 19
-  "img/p0.jpeg"  // ponto 20
+  "img/b0.jpeg", "img/b1.jpeg", "img/b2.jpeg", "img/b3.jpeg", "img/b4.jpeg",
+  "img/a0.jpeg", "img/a1.jpeg", "img/a2.jpeg", "img/a3.jpeg", "img/a4.jpeg",
+  "img/r0.jpeg", "img/r1.jpeg", "img/r2.jpeg", "img/r3.jpeg", "img/r4.jpeg",
+  "img/m0.jpeg", "img/m1.jpeg", "img/m2.jpeg", "img/m3.jpeg", "img/m4.jpeg", "img/p0.jpeg"
 ];
 
-// Código para mostrar a imagem ao passar o mouse sobre o ponto
-const tooltipImg = document.getElementById('tooltipImg');
-const canvas = document.getElementById('jiujitsuChart');
+const DIA = 86_400_000;
+const parseDate = value => {
+  const [dia, mes, ano] = value.split("/").map(Number);
+  return new Date(ano, mes - 1, dia);
+};
+const formatDate = date => new Intl.DateTimeFormat("pt-BR").format(date);
+const formatDuration = days => {
+  const years = Math.floor(days / 365.25);
+  const months = Math.round((days - years * 365.25) / 30.44);
+  return `${years}a ${months}m`;
+};
 
-canvas.addEventListener('mousemove', function(event) {
-    const points = jiujitsuChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
-    if (points.length) {
-        const idx = points[0].index;
-        if (IMAGENS_PONTOS[idx]) {
-            tooltipImg.src = IMAGENS_PONTOS[idx];
-            tooltipImg.style.display = 'block';
-            tooltipImg.style.left = (event.pageX + 20) + 'px';
-            tooltipImg.style.top = (event.pageY - 40) + 'px';
-        } else {
-            tooltipImg.style.display = 'none';
-        }
-    } else {
-        tooltipImg.style.display = 'none';
-    }
-});
+function weightedSlope(x, y) {
+  const weights = x.map((_, index) => index + 1);
+  const sum = weights.reduce((result, weight, index) => ({
+    w: result.w + weight,
+    wx: result.wx + weight * x[index],
+    wy: result.wy + weight * y[index],
+    wxx: result.wxx + weight * x[index] ** 2,
+    wxy: result.wxy + weight * x[index] * y[index]
+  }), { w: 0, wx: 0, wy: 0, wxx: 0, wxy: 0 });
+  return (sum.w * sum.wxy - sum.wx * sum.wy) / (sum.w * sum.wxx - sum.wx ** 2);
+}
 
-canvas.addEventListener('mouseleave', function() {
-    tooltipImg.style.display = 'none';
-});
+const baseDate = parseDate(DATAS_CONHECIDAS[0]);
+const knownDays = DATAS_CONHECIDAS.map(date => Math.round((parseDate(date) - baseDate) / DIA));
+const knownIndexes = knownDays.map((_, index) => index);
+const recentCount = Math.min(5, knownDays.length);
+const slope = weightedSlope(knownIndexes.slice(-recentCount), knownDays.slice(-recentCount));
+const allDays = [...knownDays];
+
+for (let index = knownDays.length; index < GRADUACOES.length; index += 1) {
+  allDays.push(Math.round(knownDays.at(-1) + slope * (index - knownIndexes.at(-1))));
+}
+
+const allDates = allDays.map(days => new Date(baseDate.getTime() + days * DIA));
+const lastKnownIndex = knownDays.length - 1;
+const blackBeltIndex = GRADUACOES.length - 1;
+
+document.querySelector("#currentRank").textContent = GRADUACOES[lastKnownIndex];
+document.querySelector("#currentDate").textContent = `Conquistada em ${formatDate(allDates[lastKnownIndex])}`;
+document.querySelector("#nextRank").textContent = GRADUACOES[lastKnownIndex + 1];
+document.querySelector("#nextDate").textContent = `Estimativa: ${formatDate(allDates[lastKnownIndex + 1])}`;
+document.querySelector("#blackBeltDate").textContent = formatDate(allDates[blackBeltIndex]);
+document.querySelector("#totalTime").textContent = `Cerca de ${formatDuration(allDays[blackBeltIndex] - allDays[0])} desde o início`;
+
+const majorRanks = [0, 5, 10, 15, 20];
+document.querySelector("#estimates").innerHTML = majorRanks.slice(0, -1).map((index, position) => {
+  const following = majorRanks[position + 1];
+  const duration = formatDuration(allDays[following] - allDays[index]);
+  return `<div class="estimate"><span>${GRADUACOES[index]} → ${GRADUACOES[following]}</span><b>~${duration}</b></div>`;
+}).join("");
+
+const metalLine = context => {
+  const { chart } = context;
+  const { ctx, chartArea } = chart;
+  if (!chartArea) return "rgba(169, 194, 226, .7)";
+  const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+  gradient.addColorStop(0, "rgba(166, 229, 255, .2)");
+  gradient.addColorStop(.45, "rgba(240, 247, 255, .92)");
+  gradient.addColorStop(1, "rgba(151, 124, 255, .3)");
+  return gradient;
+};
+
+const ctx = document.querySelector("#jiujitsuChart");
+const chart = new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: GRADUACOES,
+    datasets: [{
+      label: "Jornada",
+      data: allDays,
+      borderColor: metalLine,
+      borderWidth: 2.2,
+      tension: .28,
+      segment: { borderDash: context => context.p0DataIndex >= lastKnownIndex ? [7, 7] : undefined },
+      pointBackgroundColor: context => context.dataIndex <= lastKnownIndex ? CORES_FAIXA[context.dataIndex] : "#111a28",
+      pointBorderColor: context => context.dataIndex <= lastKnownIndex ? "#f3f7ff" : CORES_FAIXA[context.dataIndex],
+      pointBorderWidth: context => context.dataIndex <= lastKnownIndex ? 2 : 1.5,
+      pointRadius: context => context.dataIndex <= lastKnownIndex ? 5 : 4.5,
+      pointHoverRadius: 8,
+      pointStyle: context => context.dataIndex <= lastKnownIndex ? "circle" : "rectRot"
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: "nearest", intersect: true },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        displayColors: false,
+        padding: 12,
+        backgroundColor: "rgba(8, 12, 20, .95)",
+        titleColor: "#eff6ff",
+        bodyColor: "#aebcd0",
+        borderColor: "rgba(255,255,255,.18)",
+        borderWidth: 1,
+        callbacks: {
+          title: items => GRADUACOES[items[0].dataIndex],
