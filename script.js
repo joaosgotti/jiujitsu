@@ -56,9 +56,11 @@ const knownIndexes = knownDays.map((_, index) => index);
 const recentCount = Math.min(5, knownDays.length);
 const slope = weightedSlope(knownIndexes.slice(-recentCount), knownDays.slice(-recentCount));
 const allDays = [...knownDays];
+const lastKnownDay = knownDays[knownDays.length - 1];
+const lastKnownPosition = knownIndexes[knownIndexes.length - 1];
 
 for (let index = knownDays.length; index < GRADUACOES.length; index += 1) {
-  allDays.push(Math.round(knownDays.at(-1) + slope * (index - knownIndexes.at(-1))));
+  allDays.push(Math.round(lastKnownDay + slope * (index - lastKnownPosition)));
 }
 
 const allDates = allDays.map(days => new Date(baseDate.getTime() + days * DIA));
@@ -126,3 +128,42 @@ const chart = new Chart(ctx, {
         borderWidth: 1,
         callbacks: {
           title: items => GRADUACOES[items[0].dataIndex],
+          label: item => `${item.dataIndex <= lastKnownIndex ? "Marco confirmado" : "Estimativa"}: ${formatDate(allDates[item.dataIndex])}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: "rgba(255,255,255,.045)", drawTicks: false },
+        border: { display: false },
+        ticks: { color: "#8090a8", font: { size: 10, weight: "600" }, maxRotation: 48, minRotation: 48, autoSkip: true, maxTicksLimit: 11 }
+      },
+      y: {
+        grid: { color: "rgba(255,255,255,.07)", drawTicks: false },
+        border: { display: false },
+        ticks: { color: "#8090a8", callback: value => `${Math.round(value / 365.25)}a` },
+        title: { display: true, text: "Tempo desde o início", color: "#8d9bb0", font: { size: 11, weight: "600" } }
+      }
+    }
+  }
+});
+
+// Fotos são opcionais: o tooltip adicional só aparece se o arquivo realmente carregar.
+const photoTip = document.querySelector("#photoTip");
+const photoImage = document.querySelector("#photoTipImage");
+const photoLabel = document.querySelector("#photoTipLabel");
+let shownIndex = null;
+ctx.addEventListener("mousemove", event => {
+  const point = chart.getElementsAtEventForMode(event, "nearest", { intersect: true }, false)[0];
+  if (!point || !IMAGENS_PONTOS[point.index]) return void (photoTip.hidden = true);
+  if (shownIndex !== point.index) {
+    shownIndex = point.index;
+    photoImage.src = IMAGENS_PONTOS[point.index];
+    photoLabel.textContent = GRADUACOES[point.index];
+  }
+  photoTip.style.left = `${Math.min(event.clientX + 18, window.innerWidth - 178)}px`;
+  photoTip.style.top = `${Math.min(event.clientY + 18, window.innerHeight - 205)}px`;
+  photoTip.hidden = false;
+});
+ctx.addEventListener("mouseleave", () => { photoTip.hidden = true; shownIndex = null; });
+photoImage.addEventListener("error", () => { photoTip.hidden = true; });
