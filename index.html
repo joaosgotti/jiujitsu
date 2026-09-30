@@ -1,32 +1,83 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Progressão no Jiu-Jitsu</title>
-
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-
-        <h1>Minha Progressão e Previsão no Jiu-Jitsu</h1>
-        <h2>Desenvolvido por João Vítor Sgotti</h2>
-        <div class="chart-container">
-            <canvas id="jiujitsuChart"></canvas>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080b12" />
+    <title>Jornada Jiu-Jitsu — João Vítor Sgotti</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero liquid-panel">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> BJJ / PROGRESS TRACKER</p>
+          <h1>Minha jornada no<br /><em>Jiu-Jitsu.</em></h1>
+          <p class="subtitle">Histórico de graduações e uma projeção baseada no seu ritmo mais recente.</p>
         </div>
-        <img id="tooltipImg" style="display:none; position:absolute; max-width:150px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); z-index:200;">
-        <footer>
-            <div id="infoBox" class="info-box"></div>
-        </footer>
-        
+        <div class="belt-emblem" aria-label="Faixa de Jiu-Jitsu estilizada">
+          <div class="belt-knot"></div>
+          <div class="belt-strip"></div>
+          <small>OSS</small>
+        </div>
+      </section>
 
-        
+      <section class="stats" aria-label="Resumo da jornada">
+        <article class="stat-card liquid-panel">
+          <span class="stat-label">Último marco</span>
+          <strong id="currentRank">—</strong>
+          <small id="currentDate">—</small>
+        </article>
+        <article class="stat-card liquid-panel">
+          <span class="stat-label">Próximo objetivo</span>
+          <strong id="nextRank">—</strong>
+          <small id="nextDate">—</small>
+        </article>
+        <article class="stat-card liquid-panel accent-card">
+          <span class="stat-label">Meta de faixa preta</span>
+          <strong id="blackBeltDate">—</strong>
+          <small id="totalTime">—</small>
+        </article>
+      </section>
+
+      <section class="chart-card liquid-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span></span> LINHA DO TEMPO</p>
+            <h2>Do tatame à próxima faixa</h2>
+          </div>
+          <div class="legend" aria-label="Legenda do gráfico">
+            <span><i class="legend-dot actual"></i>Confirmado</span>
+            <span><i class="legend-dot forecast"></i>Estimativa</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="jiujitsuChart" aria-label="Gráfico de progressão de graduações no Jiu-Jitsu"></canvas>
+        </div>
+        <p class="method-note">A previsão é uma tendência estatística — disciplina, frequência, competições e critérios do professor podem mudar o percurso.</p>
+      </section>
+
+      <section class="projection-grid">
+        <article class="estimate-card liquid-panel">
+          <p class="eyebrow"><span></span> RITMO ESTIMADO</p>
+          <h2>Entre as faixas principais</h2>
+          <div id="estimates" class="estimates"></div>
+        </article>
+        <article class="quote-card liquid-panel">
+          <p class="quote-mark">“</p>
+          <p>Faixa preta é apenas uma faixa branca que nunca desistiu.</p>
+          <span>— Carlos Gracie Jr.</span>
+        </article>
+      </section>
+    </main>
+
+    <div id="photoTip" class="photo-tip" role="tooltip" hidden>
+      <img id="photoTipImage" alt="Registro da graduação" />
+      <span id="photoTipLabel"></span>
     </div>
 
-    <!-- Carrega a biblioteca Chart.js para desenhar o gráfico -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Carrega a lógica da nossa aplicação -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
