@@ -2,80 +2,108 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#080b12" />
-    <title>Jornada Jiu-Jitsu — João Vítor Sgotti</title>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#11110f" />
+    <title>Arquivo de Faixas — João Vítor Sgotti</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="hero liquid-panel">
+    <header class="topbar">
+      <a href="#top" class="wordmark">SGOTTI / BJJ</a>
+      <p>Arquivo de graduação · 2020—presente</p>
+      <p id="modelDate">Modelo atualizado em —</p>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <figure class="hero-photo">
+          <img id="heroPhoto" src="img/r1.jpeg" alt="Registro da graduação mais recente" />
+          <figcaption><span id="heroIndex">012</span><span id="heroRank">Roxa · 1º grau</span><span id="heroDate">23.07.2025</span></figcaption>
+        </figure>
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> BJJ / PROGRESS TRACKER</p>
-          <h1>Minha jornada no<br /><em>Jiu-Jitsu.</em></h1>
-          <p class="subtitle">Histórico de graduações e uma projeção baseada no seu ritmo mais recente.</p>
-        </div>
-        <div class="belt-emblem" aria-label="Faixa de Jiu-Jitsu estilizada">
-          <div class="belt-knot"></div>
-          <div class="belt-strip"></div>
-          <small>OSS</small>
+          <p class="kicker">MINHA JORNADA NO TATAME</p>
+          <h1>FAIXA NÃO SE<br />GANHA.<br /><em>SE CONSTRÓI.</em></h1>
+          <p class="intro">Um arquivo visual de cada graduação — e uma previsão que aprende tanto com o que aconteceu quanto com o tempo que ainda está passando.</p>
+          <div class="signature">João Vítor Sgotti <span>／ OSS</span></div>
         </div>
       </section>
 
-      <section class="stats" aria-label="Resumo da jornada">
-        <article class="stat-card liquid-panel">
-          <span class="stat-label">Último marco</span>
-          <strong id="currentRank">—</strong>
-          <small id="currentDate">—</small>
+      <section class="status-strip" aria-label="Resumo e previsão">
+        <article>
+          <p class="meta">ÚLTIMO REGISTRO</p>
+          <h2 id="currentRank">—</h2>
+          <p id="currentDate">—</p>
         </article>
-        <article class="stat-card liquid-panel">
-          <span class="stat-label">Próximo objetivo</span>
-          <strong id="nextRank">—</strong>
-          <small id="nextDate">—</small>
+        <article class="forecast-highlight">
+          <p class="meta">PRÓXIMO MARCO · MEDIANA</p>
+          <h2 id="nextDate">—</h2>
+          <p id="nextWindow">—</p>
         </article>
-        <article class="stat-card liquid-panel accent-card">
-          <span class="stat-label">Meta de faixa preta</span>
-          <strong id="blackBeltDate">—</strong>
-          <small id="totalTime">—</small>
+        <article>
+          <p class="meta">FAIXA PRETA · JANELA CENTRAL</p>
+          <h2 id="blackBeltWindow">—</h2>
+          <p id="blackBeltMedian">—</p>
         </article>
       </section>
 
-      <section class="chart-card liquid-panel">
-        <div class="section-heading">
+      <section class="archive-section">
+        <div class="section-title">
+          <p class="index">01</p>
           <div>
-            <p class="eyebrow"><span></span> LINHA DO TEMPO</p>
-            <h2>Do tatame à próxima faixa</h2>
+            <p class="kicker">ARQUIVO FOTOGRÁFICO</p>
+            <h2>Cada faixa tem uma história.</h2>
           </div>
-          <div class="legend" aria-label="Legenda do gráfico">
-            <span><i class="legend-dot actual"></i>Confirmado</span>
-            <span><i class="legend-dot forecast"></i>Estimativa</span>
-          </div>
+          <p class="section-note">Passe pelas imagens para acompanhar a cronologia real da jornada.</p>
         </div>
-        <div class="chart-wrap">
-          <canvas id="jiujitsuChart" aria-label="Gráfico de progressão de graduações no Jiu-Jitsu"></canvas>
-        </div>
-        <p class="method-note">A previsão é uma tendência estatística — disciplina, frequência, competições e critérios do professor podem mudar o percurso.</p>
+        <div id="photoArchive" class="photo-archive"></div>
       </section>
 
-      <section class="projection-grid">
-        <article class="estimate-card liquid-panel">
-          <p class="eyebrow"><span></span> RITMO ESTIMADO</p>
-          <h2>Entre as faixas principais</h2>
-          <div id="estimates" class="estimates"></div>
-        </article>
-        <article class="quote-card liquid-panel">
-          <p class="quote-mark">“</p>
-          <p>Faixa preta é apenas uma faixa branca que nunca desistiu.</p>
-          <span>— Carlos Gracie Jr.</span>
-        </article>
+      <section class="data-section">
+        <div class="section-title">
+          <p class="index">02</p>
+          <div>
+            <p class="kicker">HISTÓRICO + PROJEÇÃO</p>
+            <h2>A linha do tempo se recalcula.</h2>
+          </div>
+          <div class="legend" aria-label="Legenda">
+            <span><i class="actual"></i>real</span>
+            <span><i class="forecast"></i>estimativa</span>
+          </div>
+        </div>
+
+        <div class="chart-frame">
+          <canvas id="jiujitsuChart" aria-label="Linha do tempo das graduações"></canvas>
+          <p id="chartFallback" class="chart-fallback" hidden>O histórico foi carregado, mas o gráfico não pôde ser exibido.</p>
+        </div>
+
+        <div class="method-grid">
+          <div>
+            <p class="meta">COMO A PREVISÃO FUNCIONA</p>
+            <p>O modelo usa os intervalos já registrados e trata o período atual sem graduação como informação. Em vez de empurrar só o próximo grau, simula milhares de jornadas completas e recalcula todos os marcos seguintes.</p>
+          </div>
+          <div>
+            <p class="meta">LEITURA CORRETA</p>
+            <p>A data maior é a mediana; as faixas mostram os 60% centrais das simulações. Não é regra de graduação: frequência, pausas e decisão do professor continuam sendo determinantes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="roadmap-section">
+        <div class="section-title compact">
+          <p class="index">03</p>
+          <div>
+            <p class="kicker">CENÁRIO MEDIANO</p>
+            <h2>O caminho daqui para frente.</h2>
+          </div>
+        </div>
+        <div id="forecastRoadmap" class="forecast-roadmap"></div>
       </section>
     </main>
 
-    <div id="photoTip" class="photo-tip" role="tooltip" hidden>
-      <img id="photoTipImage" alt="Registro da graduação" />
-      <span id="photoTipLabel"></span>
-    </div>
+    <footer>
+      <p>JVS · BRAZILIAN JIU-JITSU</p>
+      <p>Treino, tempo e constância.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
