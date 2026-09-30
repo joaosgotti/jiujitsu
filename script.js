@@ -16,10 +16,11 @@ const GRADUACOES = [
 ];
 
 const IMAGENS_PONTOS = [
-  "img/b0.jpeg", "img/b1.jpeg", "img/b2.jpeg", "img/b3.jpeg", "img/b4.jpeg",
+  "img/b0.jpeg", null, null, null, null,
   "img/a0.jpeg", "img/a1.jpeg", "img/a2.jpeg", "img/a3.jpeg", "img/a4.jpeg",
   "img/r0.jpeg", "img/r1.jpeg", "img/r2.jpeg", "img/r3.jpeg", "img/r4.jpeg",
-  "img/m0.jpeg", "img/m1.jpeg", "img/m2.jpeg", "img/m3.jpeg", "img/m4.jpeg", "img/p0.jpeg"
+  "img/m0.jpeg", "img/m1.jpeg", "img/m2.jpeg", "img/m3.jpeg", "img/m4.jpeg", 
+  "img/p0.jpeg"
 ];
 
 const CORES_FAIXA = [
@@ -187,20 +188,44 @@ document.querySelector("#blackBeltWindow").textContent = `${formatMonthYear(blac
 document.querySelector("#blackBeltMedian").textContent = `Mediana estatística: ${formatDate(blackBeltForecast.median)}`;
 
 const photoArchive = document.querySelector("#photoArchive");
-photoArchive.innerHTML = knownDates.map((date, index) => `
+
+const availablePhotos = knownDates
+  .map((date, index) => ({
+    date,
+    index,
+    image: IMAGENS_PONTOS[index]
+  }))
+  .filter(item => item.image !== null)
+  .reverse();
+
+photoArchive.innerHTML = availablePhotos.map(({ date, index, image }) => `
   <figure class="photo-entry">
-    <img src="${IMAGENS_PONTOS[index]}" alt="${GRADUACOES[index]} — ${formatDate(date)}" loading="lazy" />
+    <img
+      src="${image}"
+      alt="${GRADUACOES[index]} — ${formatDate(date)}"
+      loading="lazy"
+    />
+
     <figcaption>
       <span>${String(index + 1).padStart(2, "0")}</span>
       <span>${GRADUACOES[index]}</span>
       <span>${formatDate(date)}</span>
     </figcaption>
   </figure>
-`).reverse().join("");
+`).join("");
 
 photoArchive.querySelectorAll("img").forEach(image => {
-  image.addEventListener("error", () => { image.closest("figure").hidden = true; });
+  const removeCard = () => {
+    image.closest(".photo-entry")?.remove();
+  };
+
+  image.addEventListener("error", removeCard, { once: true });
+
+  if (image.complete && image.naturalWidth === 0) {
+    removeCard();
+  }
 });
+
 
 const forecastRoadmap = document.querySelector("#forecastRoadmap");
 forecastRoadmap.innerHTML = forecasts.map((forecast, position) => {
