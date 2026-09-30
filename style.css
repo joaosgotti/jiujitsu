@@ -181,11 +181,11 @@ a {
 
 .photo-entry img {
   display: block;
-  width:80%;
+  width:100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
-  border-radius:20px
+  border-radius:25px
   /*filter: saturate(0.72) contrast(1.07);
   transition: filter 0.35s ease;*/
 }
