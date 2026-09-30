@@ -2,92 +2,219 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
     <meta name="theme-color" content="#11110f" />
+
     <title>BJJ | JVSV</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="img/favicon.png"
+    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <header class="topbar">
-      <p>Arquivo fotográfico do Jiu-Jitsu · 2020—presente · João Vítor Sgotti Veiga</p>
-      <p id="modelDate">Modelo atualizado em —</p>
+      <p>
+        Arquivo fotográfico do Jiu-Jitsu ·
+        2020—presente ·
+        João Vítor Sgotti Veiga
+      </p>
+
+      <p id="modelDate">
+        Modelo atualizado em —
+      </p>
     </header>
 
     <main id="top">
+      <!-- Arquivo fotográfico -->
+
       <section class="archive-section">
         <div class="section-title">
-          <!--<p class="index">01</p>-->
+          <p class="index">01</p>
+
           <div>
-            <!--<p class="kicker">ARQUIVO FOTOGRÁFICO</p>-->
-            <h2>A prática é o critério da verdade.</h2>
+            <p class="kicker">
+              ARQUIVO FOTOGRÁFICO
+            </p>
+
+            <h2>
+              A prática é o critério da verdade.
+            </h2>
           </div>
-          <!--<p class="section-note">Da conquista mais recente ao primeiro registro da jornada.</p>-->
+
+          <p class="section-note">
+            Da conquista mais recente ao primeiro
+            registro da jornada.
+          </p>
         </div>
-        <div id="photoArchive" class="photo-archive"></div>
+
+        <div
+          id="photoArchive"
+          class="photo-archive"
+        ></div>
       </section>
+
+      <!-- Histórico e gráfico -->
 
       <section class="data-section">
         <div class="section-title">
-          <!--<p class="index">02</p>-->
+          <p class="index">02</p>
+
           <div>
-            <!--<p class="kicker">HISTÓRICO + PROJEÇÃO</p>-->
-            <h2>A linha do tempo se recalcula.</h2>
+            <p class="kicker">
+              HISTÓRICO + PROJEÇÃO
+            </p>
+
+            <h2>
+              A linha do tempo se recalcula.
+            </h2>
           </div>
-          <div class="legend" aria-label="Legenda">
-            <span><i class="actual"></i>real</span>
-            <span><i class="forecast"></i>estimativa</span>
+
+          <div
+            class="legend"
+            aria-label="Legenda do gráfico"
+          >
+            <span>
+              <i
+                class="actual"
+                aria-hidden="true"
+              ></i>
+              Real
+            </span>
+
+            <span>
+              <i
+                class="forecast"
+                aria-hidden="true"
+              ></i>
+              Estimativa
+            </span>
           </div>
         </div>
 
         <div class="chart-frame">
-          <canvas id="jiujitsuChart" aria-label="Linha do tempo das graduações"></canvas>
-          <p id="chartFallback" class="chart-fallback" hidden>O histórico foi carregado, mas o gráfico não pôde ser exibido.</p>
+          <canvas
+            id="jiujitsuChart"
+            role="img"
+            aria-label="Linha do tempo das graduações no Jiu-Jitsu"
+          ></canvas>
+
+          <p
+            id="chartFallback"
+            class="chart-fallback"
+            hidden
+          >
+            O histórico foi carregado, mas o gráfico
+            não pôde ser exibido.
+          </p>
         </div>
 
         <div class="method-grid">
           <div>
-            <p class="meta">COMO A PREVISÃO FUNCIONA</p>
-            <p>O modelo usa os intervalos já registrados e trata o período atual sem graduação como informação. Em vez de empurrar só o próximo grau, simula milhares de jornadas completas e recalcula todos os marcos seguintes.</p>
+            <p class="meta">
+              COMO A PREVISÃO FUNCIONA
+            </p>
+
+            <p>
+              O modelo usa os intervalos já registrados
+              e trata o período atual sem graduação como
+              informação. Em vez de empurrar apenas o
+              próximo grau, ele simula milhares de
+              jornadas completas e recalcula todos os
+              marcos seguintes.
+            </p>
           </div>
+
           <div>
-            <p class="meta">LEITURA CORRETA</p>
-            <p>A data maior é a mediana; as faixas mostram os 60% centrais das simulações. Não é regra de graduação: frequência, pausas e decisão do professor continuam sendo determinantes.</p>
+            <p class="meta">
+              LEITURA CORRETA
+            </p>
+
+            <p>
+              A data maior representa a mediana. As
+              faixas mostram os 60% centrais das
+              simulações. Não é uma regra de graduação:
+              frequência, pausas e decisão do professor
+              continuam sendo determinantes.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="status-strip" aria-label="Resumo e previsão">
+      <!-- Resumo -->
+
+      <section
+        class="status-strip"
+        aria-label="Resumo da jornada e das previsões"
+      >
         <article>
-          <p class="meta">ÚLTIMO REGISTRO</p>
+          <p class="meta">
+            ÚLTIMO REGISTRO
+          </p>
+
           <h2 id="currentRank">—</h2>
+
           <p id="currentDate">—</p>
         </article>
+
         <article class="forecast-highlight">
-          <p class="meta">PRÓXIMO MARCO · MEDIANA</p>
+          <p class="meta">
+            PRÓXIMO MARCO · MEDIANA
+          </p>
+
           <h2 id="nextDate">—</h2>
+
           <p id="nextWindow">—</p>
         </article>
+
         <article>
-          <p class="meta">FAIXA PRETA · JANELA CENTRAL</p>
+          <p class="meta">
+            FAIXA PRETA · JANELA CENTRAL
+          </p>
+
           <h2 id="blackBeltWindow">—</h2>
+
           <p id="blackBeltMedian">—</p>
         </article>
       </section>
 
+      <!-- Previsões detalhadas -->
+
       <section class="roadmap-section">
         <div class="section-title compact">
           <p class="index">03</p>
+
           <div>
-            <p class="kicker">CENÁRIO MEDIANO</p>
-            <h2>O caminho daqui para frente.</h2>
+            <p class="kicker">
+              CENÁRIO MEDIANO
+            </p>
+
+            <h2>
+              O caminho daqui para frente.
+            </h2>
           </div>
         </div>
-        <div id="forecastRoadmap" class="forecast-roadmap"></div>
+
+        <div
+          id="forecastRoadmap"
+          class="forecast-roadmap"
+        ></div>
       </section>
     </main>
 
     <footer>
-      <p>Treino, tempo e constância.</p>
+      <p>
+        Treino, tempo e constância.
+      </p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
