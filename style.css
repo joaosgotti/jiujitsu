@@ -118,6 +118,21 @@ footer p { margin: 0; }
   align-self: start;
 }
 
+.photo-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  grid-column: span 3;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  background: #252522;
+
+  border-radius: 14px;
+}
+
 /* Preserva a proporção original da foto */
 .photo-entry img {
   display: block;
