@@ -105,3 +105,38 @@ footer p { margin: 0; }
   .forecast-row { grid-template-columns: 30px 1fr; }
   .forecast-row .median, .forecast-row .range { grid-column: 2; }
 }
+
+/* Mostra as fotografias completas, sem cortes */
+.photo-entry,
+.photo-entry:nth-child(1),
+.photo-entry:nth-child(6),
+.photo-entry:nth-child(11) {
+  min-height: 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+
+/* Preserva a proporção original da foto */
+.photo-entry img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+/* Evita que o texto cubra a parte inferior da foto */
+.photo-entry figcaption {
+  position: static;
+  flex-shrink: 0;
+}
+
+/* Mantém o efeito de cor sem ampliar e cortar a imagem */
+.photo-entry:hover img {
+  filter: saturate(1) contrast(1.02);
+  transform: none;
+}
