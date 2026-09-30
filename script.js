@@ -2,7 +2,7 @@
 // DADOS REAIS — adicione uma nova data aqui quando houver outra graduação.
 // -----------------------------------------------------------------------------
 const DATAS_CONHECIDAS = [
-  "31/07/2020", "17/12/2020", "05/05/2021", "21/09/2021", "07/02/2022",
+  "31/07/2020", "17/12/2020", "05/05/2021", "04/01/2022", "07/02/2022",
   "27/06/2022", "27/07/2023", "27/12/2023", "09/10/2024", "15/01/2025",
   "31/01/2025", "23/07/2025"
 ];
@@ -16,7 +16,7 @@ const GRADUACOES = [
 ];
 
 const IMAGENS_PONTOS = [
-  "img/b0.jpeg", null, null, null, null,
+  "img/b0.jpeg",  null,         null,          "img/b3.jpeg",  null,
   "img/a0.jpeg", "img/a1.jpeg", "img/a2.jpeg", "img/a3.jpeg", "img/a4.jpeg",
   "img/r0.jpeg", "img/r1.jpeg", "img/r2.jpeg", "img/r3.jpeg", "img/r4.jpeg",
   "img/m0.jpeg", "img/m1.jpeg", "img/m2.jpeg", "img/m3.jpeg", "img/m4.jpeg", 
