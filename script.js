@@ -185,11 +185,6 @@ document.querySelector("#nextDate").textContent = formatDate(forecasts[0].median
 document.querySelector("#nextWindow").textContent = `Faixa central: ${formatDate(forecasts[0].low)} — ${formatDate(forecasts[0].high)}`;
 document.querySelector("#blackBeltWindow").textContent = `${formatMonthYear(blackBeltForecast.low)} — ${formatMonthYear(blackBeltForecast.high)}`;
 document.querySelector("#blackBeltMedian").textContent = `Mediana estatística: ${formatDate(blackBeltForecast.median)}`;
-document.querySelector("#heroPhoto").src = IMAGENS_PONTOS[lastKnownIndex];
-document.querySelector("#heroPhoto").alt = `${GRADUACOES[lastKnownIndex]} — ${formatDate(lastKnownDate)}`;
-document.querySelector("#heroIndex").textContent = String(lastKnownIndex + 1).padStart(3, "0");
-document.querySelector("#heroRank").textContent = GRADUACOES[lastKnownIndex];
-document.querySelector("#heroDate").textContent = formatDate(lastKnownDate).replaceAll("/", ".");
 
 const photoArchive = document.querySelector("#photoArchive");
 photoArchive.innerHTML = knownDates.map((date, index) => `
@@ -201,7 +196,6 @@ photoArchive.innerHTML = knownDates.map((date, index) => `
       <span>${formatDate(date)}</span>
     </figcaption>
   </figure>
-`).join("");
 `).reverse().join("");
 
 photoArchive.querySelectorAll("img").forEach(image => {
