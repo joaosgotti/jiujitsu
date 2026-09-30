@@ -202,6 +202,7 @@ photoArchive.innerHTML = knownDates.map((date, index) => `
     </figcaption>
   </figure>
 `).join("");
+`).reverse().join("");
 
 photoArchive.querySelectorAll("img").forEach(image => {
   image.addEventListener("error", () => { image.closest("figure").hidden = true; });
