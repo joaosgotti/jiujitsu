@@ -185,8 +185,9 @@ a {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: center;
-  filter: saturate(0.72) contrast(1.07);
-  transition: filter 0.35s ease;
+  border-radius:20px
+  /*filter: saturate(0.72) contrast(1.07);
+  transition: filter 0.35s ease;*/
 }
 
 .photo-entry:hover img {
