@@ -7,23 +7,28 @@
   --chalk: #f1eee7;        /* texto sobre o fundo escuro */
   --purple: #8966b2;
   --purple-soft: #b294d3;  /* troca de faixa no caminho futuro */
-
+ 
   --muted: #96958f;        /* texto secundário no escuro */
   --muted-soft: #aaa8a1;   /* rótulos no escuro */
   --muted-faint: #77756f;  /* números e rodapé no escuro */
   --paper-muted: #6d6b65;  /* texto secundário no papel */
   --paper-text: #5d5b56;   /* parágrafos no papel */
-
+ 
   --line: rgba(231, 227, 218, 0.22);   /* divisórias no escuro */
   --paper-line: rgba(17, 17, 15, 0.25); /* divisórias no papel */
-
+ 
+  /* Cores das faixas para texto sobre o fundo escuro (mais claras, para dar leitura) */
+  --faixa-azul: #6aa5d6;
+  --faixa-roxa: #b294d3;
+  --faixa-marrom: #b8835f;
+ 
   --mono: "Courier New", monospace;
 }
-
+ 
 * {
   box-sizing: border-box;
 }
-
+ 
 body {
   margin: 0;
   color: var(--chalk);
@@ -31,11 +36,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-
+ 
 img {
   max-width: 100%;
 }
-
+ 
 /* Rótulos pequenos em caixa alta (kicker e meta) */
 .kicker,
 .meta {
@@ -45,7 +50,7 @@ img {
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-
+ 
 /* =============================================================================
    CABEÇALHO
    ============================================================================= */
@@ -64,15 +69,15 @@ img {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
+ 
 .topbar p {
   margin: 0;
 }
-
+ 
 .topbar p:last-child {
   text-align: right;
 }
-
+ 
 /* =============================================================================
    TÍTULOS DE SEÇÃO — três colunas: número, título, nota/legenda
    ============================================================================= */
@@ -81,7 +86,7 @@ img {
 .roadmap-section {
   padding: 92px 28px;
 }
-
+ 
 .section-title {
   display: grid;
   grid-template-columns: 56px minmax(280px, 1fr) minmax(220px, 410px);
@@ -89,21 +94,21 @@ img {
   align-items: end;
   margin-bottom: 42px;
 }
-
+ 
 .section-title.compact {
   grid-template-columns: 56px 1fr;
 }
-
+ 
 .section-title .index {
   margin: 0;
   color: var(--muted-faint);
   font: 700 11px/1 var(--mono);
 }
-
+ 
 .section-title .kicker {
   margin-bottom: 9px;
 }
-
+ 
 .section-title h2 {
   max-width: 750px;
   margin: 0;
@@ -111,14 +116,14 @@ img {
   line-height: 0.94;
   letter-spacing: -0.06em;
 }
-
+ 
 .section-note {
   margin: 0;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.55;
 }
-
+ 
 /* =============================================================================
    GALERIA DE FOTOS
    ============================================================================= */
@@ -127,7 +132,7 @@ img {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
-
+ 
 .photo-entry {
   display: flex;
   flex-direction: column;
@@ -137,7 +142,7 @@ img {
   background: #252522;
   border-radius: 14px;
 }
-
+ 
 .photo-entry img {
   display: block;
   width: 100%;
@@ -145,7 +150,7 @@ img {
   object-fit: cover;
   border-radius: 25px;
 }
-
+ 
 .photo-entry figcaption {
   display: grid;
   flex-shrink: 0;
@@ -157,13 +162,13 @@ img {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-
+ 
 /* número e data mais apagados que o nome */
 .photo-entry figcaption span:first-child,
 .photo-entry figcaption span:last-child {
   color: var(--muted-soft);
 }
-
+ 
 /* =============================================================================
    GRÁFICO
    ============================================================================= */
@@ -171,12 +176,12 @@ img {
   color: var(--ink);
   background: var(--paper);
 }
-
+ 
 .data-section .section-title .kicker,
 .data-section .section-title .index {
   color: var(--paper-muted);
 }
-
+ 
 .legend {
   display: flex;
   justify-content: flex-end;
@@ -185,39 +190,39 @@ img {
   font: 700 10px/1 var(--mono);
   text-transform: uppercase;
 }
-
+ 
 .legend span {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
+ 
 .legend i {
   display: inline-block;
   width: 24px;
   height: 2px;
   background: var(--ink);
 }
-
+ 
 .legend i.forecast {
   height: 0;
   border-top: 2px dashed var(--purple);
   background: none;
 }
-
+ 
 .chart-frame {
   height: 530px;
   padding: 24px 12px 8px;
   border-top: 2px solid var(--ink);
   border-bottom: 1px solid var(--paper-line);
 }
-
+ 
 .chart-fallback {
   padding: 50px 20px;
   color: var(--paper-muted);
   font-size: 14px;
 }
-
+ 
 /* Textos "Como a previsão funciona" e "Leitura correta" */
 .method-grid {
   display: grid;
@@ -225,11 +230,11 @@ img {
   gap: 56px;
   padding: 30px 0 0 76px; /* 76px = coluna do número + espaço: alinha com o título */
 }
-
+ 
 .method-grid .meta {
   color: var(--paper-muted);
 }
-
+ 
 .method-grid p:last-child {
   max-width: 600px;
   margin: 0;
@@ -237,7 +242,7 @@ img {
   font-size: 13px;
   line-height: 1.65;
 }
-
+ 
 /* =============================================================================
    RESUMO — último registro, próximo marco, faixa preta
    ============================================================================= */
@@ -249,57 +254,57 @@ img {
   border-top: 1px solid var(--paper-line);
   border-bottom: 1px solid var(--paper-line);
 }
-
+ 
 .status-strip article {
   min-height: 205px;
   padding: 36px 32px;
   border-right: 1px solid var(--paper-line);
 }
-
+ 
 .status-strip article:last-child {
   border-right: 0;
 }
-
+ 
 .status-strip .meta {
   color: var(--paper-muted);
 }
-
+ 
 .status-strip h2 {
   margin: 32px 0 9px;
   font-size: clamp(1.9rem, 3vw, 3.4rem);
   line-height: 0.95;
   letter-spacing: -0.055em;
 }
-
+ 
 .status-strip article > p:last-child {
   margin: 0;
   color: var(--paper-muted);
   font-size: 12px;
 }
-
+ 
 /* Cartão do meio, em roxo */
 .status-strip .forecast-highlight {
   color: var(--chalk);
   background: var(--purple);
 }
-
+ 
 .status-strip .forecast-highlight .meta,
 .status-strip .forecast-highlight > p:last-child {
   color: rgba(255, 255, 255, 0.72);
 }
-
+ 
 /* =============================================================================
    CAMINHO DAQUI PARA FRENTE
    ============================================================================= */
 .roadmap-section {
   border-bottom: 1px solid var(--line);
 }
-
+ 
 .forecast-roadmap {
   margin-left: 76px; /* alinha com o título, como .method-grid */
   border-top: 1px solid var(--line);
 }
-
+ 
 /* Colunas: número, graduação, data mediana, janela */
 .forecast-row {
   display: grid;
@@ -309,33 +314,57 @@ img {
   min-height: 84px;
   border-bottom: 1px solid var(--line);
 }
-
+ 
 .forecast-row .number {
   color: var(--muted-faint);
   font: 700 10px/1 var(--mono);
 }
-
+ 
 .forecast-row h3 {
   margin: 0;
   font-size: 20px;
   letter-spacing: -0.025em;
 }
-
-.forecast-row.belt-change h3 {
-  color: var(--purple-soft);
-}
-
+ 
 .forecast-row .median {
   font-size: 18px;
   font-weight: 700;
 }
-
+ 
 .forecast-row .range {
   color: var(--muted);
   font: 700 10px/1.45 var(--mono);
   text-transform: uppercase;
 }
-
+ 
+/* =============================================================================
+   NOME DA GRADUAÇÃO NA COR DA FAIXA
+   O script.js põe a classe faixa-branca, faixa-azul… em cada nome.
+   ============================================================================= */
+.faixa-branca { color: var(--chalk); }
+.faixa-azul   { color: var(--faixa-azul); }
+.faixa-roxa   { color: var(--faixa-roxa); }
+.faixa-marrom { color: var(--faixa-marrom); }
+ 
+/* Preta sobre fundo preto: letra preta com contorno claro */
+.faixa-preta {
+  color: var(--ink);
+  -webkit-text-stroke: 1px var(--chalk);
+}
+ 
+/* Na legenda das fotos a letra é pequena demais para contorno */
+.photo-entry .faixa-preta {
+  color: var(--chalk);
+  -webkit-text-stroke: 0;
+}
+ 
+/* No cartão claro do resumo valem as cores originais das faixas */
+.status-strip .faixa-branca,
+.status-strip .faixa-preta  { color: var(--ink); -webkit-text-stroke: 0; }
+.status-strip .faixa-azul   { color: #387aad; }
+.status-strip .faixa-roxa   { color: var(--purple); }
+.status-strip .faixa-marrom { color: #79513d; }
+ 
 /* =============================================================================
    RODAPÉ
    ============================================================================= */
@@ -346,100 +375,101 @@ footer {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
+ 
 footer p {
   margin: 0;
 }
-
+ 
 /* =============================================================================
    TELAS MENORES
    ============================================================================= */
-
+ 
 /* Tablet: três fotos por linha */
 @media (max-width: 980px) {
   .photo-archive {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
+ 
 /* Celular: duas fotos por linha, tudo em uma coluna */
 @media (max-width: 720px) {
   .topbar {
     padding: 0 16px;
   }
-
+ 
   .archive-section,
   .data-section,
   .roadmap-section {
     padding: 68px 16px;
   }
-
+ 
   .section-title {
     grid-template-columns: 38px 1fr;
   }
-
+ 
   .section-note,
   .legend {
     grid-column: 2;
     justify-content: flex-start;
   }
-
+ 
   .photo-archive {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
+ 
   .chart-frame {
     height: 430px;
     padding-inline: 0;
   }
-
+ 
   .method-grid {
     grid-template-columns: 1fr;
     gap: 30px;
     padding-left: 38px;
   }
-
+ 
   .status-strip {
     grid-template-columns: 1fr;
   }
-
+ 
   .status-strip article {
     min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--paper-line);
   }
-
+ 
   .forecast-roadmap {
     margin-left: 38px;
   }
-
+ 
   .forecast-row {
     grid-template-columns: 34px 1fr auto;
     padding: 16px 0;
   }
-
+ 
   .forecast-row .range {
     grid-column: 2 / -1;
   }
 }
-
+ 
 /* Celular pequeno: uma foto por linha */
 @media (max-width: 460px) {
   .topbar {
     gap: 12px;
     font-size: 8px;
   }
-
+ 
   .photo-archive {
     grid-template-columns: 1fr;
   }
-
+ 
   .forecast-row {
     grid-template-columns: 30px 1fr;
   }
-
+ 
   .forecast-row .median,
   .forecast-row .range {
     grid-column: 2;
   }
 }
+ 
