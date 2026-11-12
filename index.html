@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <meta name="theme-color" content="#11110f" />
+
+    <title>BJJ | JVSV</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="img/favicon.png"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <p>
+        Arquivo fotográfico do Jiu-Jitsu
+      </p>
+
+      <p id="modelDate">
+        Modelo atualizado em —
+      </p>
+    </header>
+
+    <main id="top">
+
+      <section class="archive-section">
+        <div class="section-title">
+          <p class="index"></p>
+
+          <div>
+            <p class="kicker">
+            </p>
+
+            <h2>
+              A prática é o critério da verdade.
+            </h2>
+          </div>
+
+          <p class="section-note">
+            
+          </p>
+        </div>
+
+        <div
+          id="photoArchive"
+          class="photo-archive"
+        ></div>
+      </section>
+
+
+      <section class="data-section">
+        <div class="section-title">
+          <p class="index"></p>
+
+          <div>
+            <p class="kicker">
+            </p>
+
+            <h2>
+              Linha do tempo se recalcula.
+            </h2>
+          </div>
+
+          <div
+            class="legend"
+            aria-label="Legenda do gráfico"
+          >
+            <span>
+              <i
+                class="actual"
+                aria-hidden="true"
+              ></i>
+              Real
+            </span>
+
+            <span>
+              <i
+                class="forecast"
+                aria-hidden="true"
+              ></i>
+              Estimativa
+            </span>
+          </div>
+        </div>
+
+        <div class="chart-frame">
+          <canvas
+            id="jiujitsuChart"
+            role="img"
+            aria-label="Linha do tempo das graduações no Jiu-Jitsu"
+          ></canvas>
+
+          <p
+            id="chartFallback"
+            class="chart-fallback"
+            hidden
+          >
+            O histórico foi carregado, mas o gráfico
+            não pôde ser exibido.
+          </p>
+        </div>
+
+        <div class="method-grid">
+          <div>
+            <p class="meta">
+              COMO A PREVISÃO FUNCIONA
+            </p>
+
+            <p>
+              Cada intervalo entre graus segue um modelo
+              de tempo de espera cujo ritmo muda de faixa
+              para faixa. O ponto de partida vem de
+              pesquisas com milhares de praticantes; o
+              histórico registrado ajusta esse ritmo, e o
+              período atual sem graduação também conta.
+              Milhares de jornadas completas são simuladas,
+              respeitando o tempo mínimo de cada faixa.
+            </p>
+          </div>
+
+          <div>
+            <p class="meta">
+              LEITURA CORRETA
+            </p>
+
+            <p>
+              A data maior representa a mediana. As
+              faixas mostram os 60% centrais das
+              simulações — e alargam quanto mais longe
+              está o marco. Não é uma regra de graduação:
+              frequência, pausas e decisão do professor
+              continuam sendo determinantes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resumo -->
+
+      <section
+        class="status-strip"
+        aria-label="Resumo da jornada e das previsões"
+      >
+        <article>
+          <p class="meta">
+            ÚLTIMO REGISTRO
+          </p>
+
+          <h2 id="currentRank">—</h2>
+
+          <p id="currentDate">—</p>
+        </article>
+
+        <article class="forecast-highlight">
+          <p class="meta">
+            PRÓXIMO MARCO · MEDIANA
+          </p>
+
+          <h2 id="nextDate">—</h2>
+
+          <p id="nextWindow">—</p>
+        </article>
+
+        <article>
+          <p class="meta">
+            FAIXA PRETA · JANELA CENTRAL
+          </p>
+
+          <h2 id="blackBeltWindow">—</h2>
+
+          <p id="blackBeltMedian">—</p>
+        </article>
+      </section>
+
+      <!-- Previsões detalhadas -->
+
+      <section class="roadmap-section">
+        <div class="section-title compact">
+          <p class="index"></p>
+
+          <div>
+            <p class="kicker">
+              CENÁRIO MEDIANO
+            </p>
+
+            <h2>
+              O caminho daqui para frente.
+            </h2>
+          </div>
+        </div>
+
+        <div
+          id="forecastRoadmap"
+          class="forecast-roadmap"
+        ></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Treino, tempo e constância.
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="dados.js"></script>
+    <script src="modelo.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
